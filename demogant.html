@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script type='text/javascript' src="https://unpkg.com/angular@^1.7.5/angular.js"></script>
+        <script type='text/javascript' src="https://unpkg.com/moment@^2.22.2"></script>
+        <script type='text/javascript' src="https://unpkg.com/angular-moment@^1.3.0"></script>
+        <script type='text/javascript' src="https://unpkg.com/moment-range@^2.2.0"></script>
+        <script type='text/javascript' src="https://unpkg.com/angular-ui-tree@^2.22.5/dist/angular-ui-tree.min.js"></script>
+        <script type='text/javascript' src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script type='text/javascript' src="https://unpkg.com/popper.js/dist/umd/popper.min.js"></script>
+        <script type='text/javascript' src="https://unpkg.com/bootstrap@^3.3.7/dist/js/bootstrap.min.js"></script>
+        <script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/angular-gantt/1.3.2/angular-gantt.min.js"></script>
+        <script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/angular-gantt/1.3.2/angular-gantt-plugins.min.js"></script>
+        
+
+        <link rel="stylesheet" type="text/css" href="https://unpkg.com/angular-ui-tree@^2.22.5/dist/angular-ui-tree.min.css">
+        <link rel="stylesheet" type="text/css" href="https://unpkg.com/font-awesome@^4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" type="text/css" href="https://unpkg.com/bootstrap@^3.3.7/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/angular-gantt/1.3.3/angular-gantt.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/angular-gantt/1.3.3/angular-gantt-plugins.min.css">
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+        <script  type='text/javascript'  src="demo2.js"></script>
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <script>
+        $(function(){
+            $('.dropdown-menu .dropdown-item').click(function(){
+                var visibleItem = $('.dropdown-toggle', $(this).closest('.dropdown'));
+                visibleItem.text($(this).attr('value')).append(' <span class="caret"></span>');
+            });
+            var start = moment().subtract(29, 'days');
+            var end = moment();
+
+            function cb(start, end) {
+                $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+            }
+
+            $('#reportrange').daterangepicker({
+                startDate: start,
+                endDate: end,
+                ranges: {
+                'Today': [moment(), moment()],
+                'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                'This Month': [moment().startOf('month'), moment().endOf('month')],
+                'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                }
+            }, cb);
+
+            cb(start, end);
+        });
+
+        </script>
+        <style>
+            .migi{
+                background: #fff;
+                cursor: pointer;
+                padding: 5px 10px;
+                border: 1px solid #ccc;
+                width: 320px;                
+            }
+        
+        </style>
+    </head>
+    <body style="padding:10px">
+         <table>
+            <tr>
+                <td>          
+                    <div class="input-group">
+                        <input type="text" class="form-control" autocomplete="on" list="test" placeholder="検索する日付項目">
+                        <datalist id="test">
+                            <option value="希望入職時期">
+                            <option value="活動開始時期">
+                            <option value="次回連絡日">
+                            <option value="次回アポ日時">
+                        </datalist> 
+                    </div>
+                </td>
+                <td>
+                    <div class="input-group">
+                        <div id="reportrange" class="form-control migi">
+                            <i class="fa fa-calendar"></i>&nbsp;
+                            <span></span> <i class="fa fa-caret-down"></i>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="input-group roleName">
+                        <input type="text" class="form-control" autocomplete="on" list="role" placeholder="ロール">
+                        <datalist id="role">
+                            <option value="大阪第一事業所①">
+                            <option value="千葉事業所②">
+                        </datalist>
+                    </div>
+                </td>
+                <td>
+                    <div class="input-group userName">
+                        <input type="text" class="form-control" autocomplete="on" list="user" placeholder="所有者">
+                        <datalist id="user">
+                            <option value="くらうち">
+                            <option value="なて">
+                        </datalist>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <div ng-app="demo" ng-controller="myCtrl">
+            <div gantt data="data" options="options" headers-formats="headersFormats">
+                <gantt-tree></gantt-tree>
+                <gantt-tooltips></gantt-tooltips>
+                <gantt-bounds></gantt-bounds>
+                <gantt-progress></gantt-progress>
+            </div>
+        </div>
+    </body>
+</html>

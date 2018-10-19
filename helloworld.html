@@ -1,0 +1,18 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>Casley Consulting Angular tutorial </title>
+<script src="http://code.angularjs.org/1.3.0-beta.17/angular.min.js"></script><!--➁-->
+<script src="helloworld.js"></script>
+</head>
+<body ng-app="HelloWorldApp"><!--➃-->
+    <p> ここに変更してみると </p>
+    <input type="text" placeholder="ここに何か入力してください" ng-model="hello" ng-init="hello='Hello World'" /><!--➀-->
+    <p> ここに反映される : {{ hello }}</p><!--➀-->
+    <p> 上記メッセージは {{ hello.length }}<!--➀-->個の文字があります</p>
+    <div ng-controller="myController">
+        myvar is {{myvar}}
+    </div>
+</body>
+</html>
